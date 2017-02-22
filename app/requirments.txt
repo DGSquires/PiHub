@@ -1,0 +1,20 @@
+# Current working Database - UserTable only
+    Revision ID: 8a464d5585b9
+    Revises: efcb03ca4339
+    Create Date: 2016-12-12 04:58:12.487925
+
+# Next migration - UserTable & NodeTable
+    Revision ID: 8a464d5585b9
+    Revises: efcb03ca4339
+    Create Date: 2016-12-12 04:58:12.487925
+
+# Next migration - UserTable , NodeTable , Association Table
+    Revision ID: 1a8088b9d1bb
+    Revises: 8a464d5585b9
+    Create Date: 2016-12-13 16:54:29.560554
+
+
+~ TO DO
+Admin Panel
+User Profile
+Clean Up Interface
