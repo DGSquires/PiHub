@@ -1,10 +1,13 @@
 /* Color Palette */
 .fill-primary {
     background-color: #2874A6;
-    color: #FBFCFC ;
+    color: #FBFCFC;
 }
 .content {
-    background-color: #E5E7E9
+    background-color: #E5E7E9;
+}
+.pad {
+    padding: 20px;
 }
 
 /* UNEEDED

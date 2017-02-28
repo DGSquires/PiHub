@@ -4,29 +4,45 @@
 {% block title %}Development PiHub: Access Control{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <h2 class="card-header">Access Point Information</h2>
+            <div class="card-block">
+                <ul class="list-group">
+                    <li class="list-group-item">Name: {{node['name']}}</li>
+                    <li class="list-group-item">IP_Address: {{node['ip_address']}}</li>
+                    <li class="list-group-item">Access Time: {{ node['dat_start'] }} - {{ node['dat_end'] }}</li>
+                    {% if node['is_open'] %}
+                    <li class="list-group-item">Current State: LOCKED</li>
+                    {% else %}
+                    <li class="list-group-item">Current State: UNLOCKED</li>
+                    {% endif %}
+                </ul><br>
+                <a href="#" class="btn btn-primary" style="font-size: 2rem;">Update</a>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="col-md-6">
-    <h3>Access Point Information</h3>
-    <br>NAME: {{ node['name'] }}
-    <br>IP ADDRESS: {{ node['ip_address'] }}
-    <br>ACCESS TIMES: {{ node['dat_start'] }} - {{ node['dat_end'] }}
-    {% if node['is_open'] %}
-        <br>CURRENT STATE: OPEN
-    {% else %}
-        <br>CURRENT STATE: LOCKED
-    {% endif %}
-    <br>Connected Users
-    <ul>
-        {% for user in users %}
-        <li>{{ user['first_name'] }} {{user['last_name'] }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('profile.node_edit', id=node['id']) }}">Edit Access Point</a>
-    <br>
-    <a href="{{ url_for('control.add_node_users') }}">Add Users To This Access Point</a>
-    <br>
-    <a href="">Remove Users From This Access Point</a>
-
+<div><br></div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <h2 class="card-header">Connected Users</h2>
+            <div class="card-block">
+                <ul class="list-group">
+                    {% for user in users %}
+                    <li class="list-group-item">{{ user['first_name'] }} {{user['last_name'] }}</li>
+                    {% endfor %}
+                </ul><br>
+                <a href="#" class="btn btn-primary" style="font-size: 2rem;">Add User</a>
+                <span>
+                    <a href="#" class="btn btn-danger" style="font-size: 2rem;">Remove User</a>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

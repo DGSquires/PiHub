@@ -4,23 +4,48 @@
 {% block title %}Development PiHub: Access Control{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <h2 class="card-header">User Profile Information</h2>
+            <div class="card-block">
+                <ul class="list-group">
+                    <li class="list-group-item">First Name: {{user['first_name']}}</li>
+                    <li class="list-group-item">Last Name: {{user['last_name']}}</li>
+                    <li class="list-group-item">Email: {{user['email']}}</li>
+                </ul><br>
+                <a href="#" class="btn btn-primary" style="font-size: 2rem;">Update</a>
+                <span><a href="#" class="btn btn-outline-primary" style="font-size: 2rem;">Change Password</a></span>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="col-md-6">
-    <h3>User Profile Information</h3>
-    <br> First Name: {{ user['first_name'] }}
-    <br> Last Name: {{ user['last_name'] }}
-    <br> Email: {{ user['email'] }}
-    <br> Connected Access Points
-    <ul>
-        {% for node in nodes %}
-        <li>{{ node['name'] }}
-            <br><a href="{{ url_for('profile.node', id=node['id']) }}">View Access Point</a>
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('profile.user_edit', id=user['id']) }}">Edit Profile</a>
-    <br>
-    <a href="{{ url_for('profile.user_password', id=user['id']) }}">Change Password</a>
+<div class="row"><br></div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <h2 class="card-header">Connected Access Points</h2>
+            <div class="card-block">
+                <ul class="list-group">
+                    <li class="list-group-item active">Administrator Access</li>
+                    {% for node in nodes %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('profile.node', id=node['id']) }}">{{ node['name']}}</a>
+                    </li>
+                    {% endfor %}
+                </ul><br>
+                <ul class="list-group">
+                    <li class="list-group-item active">Standard Access</li>
+                    {% for node in nodes %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('profile.node', id=node['id']) }}">{{ node['name']}}</a>
+                    </li>
+                    {% endfor %}
+                </ul><br>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
