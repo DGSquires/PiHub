@@ -5,44 +5,63 @@
 
 {% block page_content %}
 {{ super() }}
-{% for node in node_data %}
-<div class="col-md-4 pad">
-    <div class="pad">
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
         <div class="card">
-            <h3 class="card-header">{{node['name']}}</h3>
+            <div class="card-header"><h3>Access Control</h3></div>
             <div class="card-block">
-                <h4 class="card-title">
-                    <a href="{{ url_for('profile.node', id=node['id']) }}">Configuration</a>
-                </h4>
-                <div class="btn-group" data-toggle="buttons">
-                    {% if node['is_open'] == True %}
-                    <label class="btn btn-primary active">
-                        <input type="radio" name="is_open" id="option1" value="True" onchange="this.form.submit();" autocomplete="off" checked>
-                        <h4>Unlocked</h4>
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="is_open" id="option2" value="False" onchange="this.form.submit();" autocomplete="off">
-                        <h4>Locked</h4>
-                    </label>
-                    {% else %}
-                    <label class="btn btn-primary">
-                        <input type="radio" name="is_open" id="option3" value="True" onchange="this.form.submit();" autocomplete="off">
-                        <h4>Unlocked</h4>
-                    </label>
-                    <label class="btn btn-primary active">
-                        <input type="radio" name="is_open" id="option4" value="False" onchange="this.form.submit();" autocomplete="off" checked>
-                        <h4>Locked</h4>
-                    </label>
-                    {% endif %}
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    {% for node in node_data %}
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-header"><h3>{{node['name']}}<a
+                                    href="{{ url_for('profile.node', id=node['id']) }}" style="padding-left:10em">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></h3>
+                            </div>
+                            <div class="card-block">
+                                <form action="/control/access" method="post">
+                                    <input type="hidden" name="id" value="{{node['id']}}">
+                                    <div class="btn-group btn-lg" data-toggle="buttons">
+                                        {% if node['is_open'] == True %}
+                                        <label class="btn btn-primary active btn-lg">
+                                            <input type="radio" name="is_open" id="option1" value="True"
+                                                   onchange="this.form.submit();" autocomplete="off" checked> Unlocked
+                                        </label>
+                                        <label class="btn btn-primary btn-lg">
+                                            <input type="radio" name="is_open" id="option2" value="False"
+                                                   onchange="this.form.submit();" autocomplete="off"> Locked
+                                        </label>
+                                        {% else %}
+                                        <label class="btn btn-primary btn-lg">
+                                            <input type="radio" name="is_open" id="option3" value="True"
+                                                   onchange="this.form.submit();" autocomplete="off"> Unlocked
+                                        </label>
+                                        <label class="btn btn-primary active btn-lg">
+                                            <input type="radio" name="is_open" id="option4" value="False"
+                                                   onchange="this.form.submit();" autocomplete="off" checked> Locked
+                                        </label>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <br></div>
+                    <br>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4"><br>
+                    <button type="button" class="btn btn-secondary">
+                        <a href="{{ url_for('control.add_node') }}"><h3>Add Node</h3></a>
+                    </button>
                 </div>
             </div>
         </div>
-    </div><br><br>
+    </div>
 </div>
-{% endfor %}
-<div class="col-md-4"><br>
-    <button type="button" class="btn btn-secondary">
-        <a href="{{ url_for('control.add_node') }}"><h3>Add Node</h3></a>
-    </button>
-</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
 {% endblock %}

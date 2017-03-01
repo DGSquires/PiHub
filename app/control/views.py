@@ -5,6 +5,7 @@ from . import control
 from .. import db
 from ..models import User, Association, Node, Permissions
 from .forms import AddNode, AddNodeUsers
+from networking import socket_client
 
 
 @control.route('/access', methods=['GET', 'POST'])
@@ -14,11 +15,17 @@ def access():
     if request.method == 'POST':
         print(form)
         node_info = db.session.query(Node).filter_by(id=form['id']).first()
-        if form['is_open'] == 'True':
-            node_info.is_open = True
-        if form['is_open'] == 'False':
-            node_info.is_open = False
-        db.session.commit()
+        (success, new_state) = socket_client(form['is_open'], node_info.ip_address)
+        print('Transmission success: '+success + ' | New node state: '+new_state)
+        if success:
+            if new_state == 'True':
+                node_info.is_open = True
+            if new_state =='False':
+                node_info.is_open = False
+            db.session.commit()
+            flash('Access request successful')
+        if success is False:
+            flash('Access request could not be completed')
     return render_template('control/access.html',
                            node_data=node_list())
 

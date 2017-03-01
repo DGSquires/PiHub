@@ -6,6 +6,8 @@
 {{ super() }}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 {% endblock %}
 
 {% block styles %}
@@ -14,6 +16,7 @@
       integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='palette.css')}}">
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block body_attribs %}
@@ -28,7 +31,7 @@ font-size: 2rem;
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#"><h2>Navbar</h2></a>
+    <a class="navbar-brand" href="#"><h2>PiHub</h2></a>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             {% if current_user.is_authenticated %}
@@ -68,7 +71,6 @@ font-size: 2rem;
 
 </div>
 {% endblock %}
-
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
