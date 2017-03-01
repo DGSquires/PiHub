@@ -20,8 +20,8 @@ def socket_client(state, host, port=4096):
     message = sock.recv(4096).decode('utf-8')
     print('message received: '+message)
     sock.close()
-    if isinstance(message,bool):
-        return (True, message)
-    return (False, None)
+    if message is None:
+        return (False, None)
+    return (True, message)
 
 
