@@ -16,7 +16,9 @@ def socket_client(state, host, port=4096):
         print(e)
         return (False, None)
     sock.send((str(state)).encode())
+    print('message sent: '+state)
     message = sock.recv(4096).decode('utf-8')
+    print('message received: '+message)
     sock.close()
     if isinstance(message,bool):
         return (True, message)
