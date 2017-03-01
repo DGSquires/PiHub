@@ -16,7 +16,7 @@ def access():
         print(form)
         node_info = db.session.query(Node).filter_by(id=form['id']).first()
         (success, new_state) = socket_client(form['is_open'], node_info.ip_address)
-        print('Transmission success: '+success + ' | New node state: '+new_state)
+        print('Transmission success: '+ str(success) + ' | New node state: '+str(new_state))
         if success:
             if new_state == 'True':
                 node_info.is_open = True
@@ -28,7 +28,6 @@ def access():
             flash('Access request could not be completed')
     return render_template('control/access.html',
                            node_data=node_list())
-
 
 def node_list():
     user = User.query.filter_by(email=session['email']).first()         # Returns User ID from email of current session user
