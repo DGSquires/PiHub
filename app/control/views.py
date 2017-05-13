@@ -6,6 +6,7 @@ from .. import db
 from ..models import User, Association, Node, Permissions
 from .forms import AddNode, AddNodeUsers
 from networking import socket_client
+from config import Privileges
 
 
 @control.route('/access', methods=['GET', 'POST'])
@@ -15,17 +16,22 @@ def access():
     if request.method == 'POST':
         print(form)
         node_info = db.session.query(Node).filter_by(id=form['id']).first()
-        (success, new_state) = socket_client(form['is_open'], node_info.ip_address)
-        print('Transmission success: '+ str(success) + ' | New node state: '+str(new_state))
-        if success:
-            if new_state == 'True':
-                node_info.is_open = True
-            if new_state =='False':
-                node_info.is_open = False
-            db.session.commit()
-            flash('Access request successful')
-        if success is False:
-            flash('Access request could not be completed')
+        user = User.query.filter_by(email=session['email']).first()
+        association = Association.query.filter_by(user_id=user.id, node_id=node_info.id).first()
+        if association.can(Privileges.CONTROL_ACCESS):
+            (success, new_state) = socket_client(form['is_open'], node_info.ip_address)
+            print('Transmission success: ' + str(success) + ' | New node state: '+str(new_state))
+            if success:
+                if new_state == 'True':
+                    node_info.is_open = True
+                if new_state =='False':
+                    node_info.is_open = False
+                db.session.commit()
+                flash('Access request successful')
+            if success is False:
+                flash('Access request could not be completed')
+        if association.can(0x03) is not True:
+            flash('You are not authorised to make this action')
     return render_template('control/access.html',
                            node_data=node_list())
 

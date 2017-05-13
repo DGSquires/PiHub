@@ -21,6 +21,10 @@ class Config:
     def init_app(app):
         pass
 
+class Privileges():
+    CONTROL_ACCESS = 0x03
+    PROFILE_ADD_USERS = 0x04
+    PROFILE_REMOVE_USERS = 0x08
 
 class DevelopmentConfig(Config):
     DEBUG = True

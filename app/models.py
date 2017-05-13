@@ -13,25 +13,19 @@ def load_user(user_id):
 
 # PERMISSIONS DATA STRUCTURE
 class Permissions:
-    UNLOCK = 0x01       #Unlock node
-    LOCK = 0x02         #lock node
-    DAT = 0x04          #Default access time frame
-    OVERRIDE_UAT = 0x08 #Can define
-    ADD_USER = 0x0F
-    REMOVE_USER = 0x20
-    OVERRIDE_DAT = 0x40
-    NAME = 0x80
-    IP_ADDRESS = 0x100
-    ONLINE = 0x200
+    UNLOCK = 0x01
+    LOCK = 0x02
+    ADD_USER = 0x04
+    REMOVE_USER = 0x08
+    UNIQUE_ACCESS_TIME = 0x0F
 
-    STANDARD = UNLOCK | LOCK | DAT
-    SUPER = STANDARD | OVERRIDE_UAT | ADD_USER | REMOVE_USER | OVERRIDE_DAT
-    ADMIN = SUPER | NAME | IP_ADDRESS | ONLINE
 
-    permission_dict = {'UNLOCK': UNLOCK, 'LOCK': LOCK, 'DAT': DAT, 'OVERRIDE_UAT': OVERRIDE_UAT,
-                  'ADD_USER': ADD_USER, 'REMOVE_USER': REMOVE_USER, 'OVERRIDE_DAT': OVERRIDE_DAT,
-                  'NAME': NAME, 'IP_ADDRESS': IP_ADDRESS, 'ONLINE': ONLINE, 'STANDARD': STANDARD,
-                       'SUPER': SUPER, 'ADMIN': ADMIN}
+    STANDARD = UNLOCK | LOCK
+    SUPER = STANDARD | ADD_USER | REMOVE_USER | UNIQUE_ACCESS_TIME
+
+    permission_dict = {'UNLOCK': UNLOCK, 'LOCK': LOCK, 'ADD_USER': ADD_USER,
+                       'REMOVE_USER': REMOVE_USER, 'UNIQUE_ACCESS_TIME':UNIQUE_ACCESS_TIME,
+                       'STANDARD': STANDARD, 'SUPER': SUPER}
 
 
 # NODE-USER ASSOCIATION TABLE
@@ -43,6 +37,10 @@ class Association(db.Model):
 
     node = db.relationship('Node')
     user = db.relationship('User')
+
+    def can(self, permisson):
+        return self.permissions is not None and \
+               (self.permissions & permisson) == permisson
 
 # USER DATA STRUCTURE
 class User(UserMixin, db.Model):
@@ -110,7 +108,6 @@ class User(UserMixin, db.Model):
         }
         return json_user
 
-
 # NODE DATA STRUCTURE
 class Node(db.Model):
     __tablename__ = 'Node'
@@ -122,6 +119,7 @@ class Node(db.Model):
     is_open = db.Column(db.Boolean)
     is_online = db.Column(db.Boolean, default=False)     #When raspbery pi's introduced changed to False and make a method to activate
     users = db.relationship('Association')
+    permission = db.Column(db.Integer, default=None)
 
     def to_json(self):
         json_node = {

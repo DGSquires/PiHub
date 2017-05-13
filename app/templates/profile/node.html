@@ -19,8 +19,7 @@
                     {% else %}
                     <li class="list-group-item">Current State: UNLOCKED</li>
                     {% endif %}
-                </ul><br>
-                <a href="#" class="btn btn-primary" style="font-size: 2rem;">Update</a>
+                </ul>
             </div>
         </div>
     </div>
@@ -37,9 +36,9 @@
                     <li class="list-group-item">{{ user['first_name'] }} {{user['last_name'] }}</li>
                     {% endfor %}
                 </ul><br>
-                <a href="#" class="btn btn-primary" style="font-size: 2rem;">Add User</a>
+                <a href="{{ url_for('profile.add_users',id=node['id']) }}" class="btn btn-primary" style="font-size: 2rem;">Add User</a>
                 <span>
-                    <a href="#" class="btn btn-danger" style="font-size: 2rem;">Remove User</a>
+                    <a href="{{ url_for('profile.remove_users',id=node['id']) }}"class="btn btn-danger" style="font-size: 2rem;">Remove User</a>
                 </span>
             </div>
         </div>

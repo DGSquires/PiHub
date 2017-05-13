@@ -9,42 +9,39 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header"><h3>Access Control</h3></div>
+            <h2 class="card-header">Access Control</h2>
             <div class="card-block">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
                     {% for node in node_data %}
-                    <div class="row">
                         <div class="card">
-                            <div class="card-header"><h3>{{node['name']}}<a
-                                    href="{{ url_for('profile.node', id=node['id']) }}" style="padding-left:10em">
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></h3>
+                            <div class="card-header"><h2>{{node['name']}}<a
+                                    href="{{ url_for('profile.node', id=node['id']) }}" style="padding-left:8em">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></h2>
                             </div>
                             <div class="card-block">
-                                <form action="/control/access" method="post">
+                                <form action="/control/access" method="post"><h2>
                                     <input type="hidden" name="id" value="{{node['id']}}">
                                     <div class="btn-group btn-lg" data-toggle="buttons">
                                         {% if node['is_open'] == True %}
                                         <label class="btn btn-primary active btn-lg">
                                             <input type="radio" name="is_open" id="option1" value="True"
-                                                   onchange="this.form.submit();" autocomplete="off" checked> Unlocked
+                                                   onchange="this.form.submit();" autocomplete="off" checked><h2>Unlocked</h2>
                                         </label>
                                         <label class="btn btn-primary btn-lg">
                                             <input type="radio" name="is_open" id="option2" value="False"
-                                                   onchange="this.form.submit();" autocomplete="off"> Locked
+                                                   onchange="this.form.submit();" autocomplete="off"> <h2>Locked</h2>
                                         </label>
                                         {% else %}
                                         <label class="btn btn-primary btn-lg">
                                             <input type="radio" name="is_open" id="option3" value="True"
-                                                   onchange="this.form.submit();" autocomplete="off"> Unlocked
+                                                   onchange="this.form.submit();" autocomplete="off"> <h2>Unlocked</h2>
                                         </label>
                                         <label class="btn btn-primary active btn-lg">
                                             <input type="radio" name="is_open" id="option4" value="False"
-                                                   onchange="this.form.submit();" autocomplete="off" checked> Locked
+                                                   onchange="this.form.submit();" autocomplete="off" checked> <h2>Locked</h2>
                                         </label>
                                         {% endif %}
                                     </div>
-                                </form>
+                                </h2></form>
                             </div>
                         </div>
                         <br></div>

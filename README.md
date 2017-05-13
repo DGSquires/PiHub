@@ -1,2 +1,0 @@
-# PiHub
-Base Project

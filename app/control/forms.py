@@ -25,8 +25,7 @@ class AddNodeUsers(Form):
     email = StringField('User Email', validators=[DataRequired(), Email()])
     role = RadioField('User Privilege Level', validators=[DataRequired()],
                       choices=[('STANDARD', 'User'),
-                               ('SUPER', 'Super User'),
-                               ('ADMIN', 'Administrator User')])
+                               ('SUPER', 'Super User'),])
     iterate = BooleanField('Add More Users To Node', default=False)
     submit = SubmitField('Add User')
 

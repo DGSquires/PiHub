@@ -1,6 +1,6 @@
 from flask import session, flash
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, BooleanField, RadioField, ValidationError, PasswordField
+from wtforms import StringField, SubmitField, BooleanField, RadioField, ValidationError, PasswordField, HiddenField
 from wtforms.validators import DataRequired, Length, IPAddress, Email, StopValidation, EqualTo
 from wtforms_components import TimeField
 from ..models import User, Node, Association
@@ -38,3 +38,11 @@ class UserPassword(Form):
                                                      EqualTo('password2', message='Passwords must match')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class AddUsers(Form):
+    email = StringField('User Email', validators=[DataRequired(), Email()])
+    iterate = BooleanField('Add More Users To Node', default=False)
+    submit = SubmitField('Add User')
+
+class NodeForm(Form):
+    submit = SubmitField('Add Users to Access Point')
